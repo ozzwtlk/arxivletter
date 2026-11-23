@@ -1,0 +1,41 @@
+# arXivletter server — run on the always-on box (Raspberry Pi, NAS, home server):
+#   cp .env.example .env     # set ARXIVLETTER_TOKEN (./arxivletter new-token) and ARXIVLETTER_CONTACT_EMAIL
+#   docker compose up -d --build
+# Then open http://<server>:8282 and, on the main PC, run `./arxivletter setup-worker http://<server>:8282 main-pc`.
+#
+# Optional containerised worker on the main PC (local model only; Claude Code / Codex need the native worker):
+#   docker compose --profile worker up -d worker
+services:
+  arxivletter:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: arxivletter-server:latest
+    container_name: arxivletter
+    restart: unless-stopped
+    ports:
+      - "${ARXIVLETTER_PORT:-8282}:8000"
+    env_file: .env
+    environment:
+      ARXIVLETTER_TOKEN: ${ARXIVLETTER_TOKEN:?set ARXIVLETTER_TOKEN in .env (at least 16 characters)}
+      ARXIVLETTER_ROLE: server
+    volumes:
+      - ${ARXIVLETTER_DATA:-./server-data}:/data
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "5" }
+
+  worker:
+    profiles: ["worker"]
+    image: arxivletter-server:latest
+    container_name: arxivletter-worker
+    restart: unless-stopped
+    command: ["arxivletter", "worker"]
+    network_mode: host            # reaches the host's llama.cpp on 127.0.0.1 and the server on the LAN
+    env_file: .env
+    environment:
+      ARXIVLETTER_ROLE: worker
+      ARXIVLETTER_SERVER_URL: ${ARXIVLETTER_WORKER_SERVER_URL:-http://127.0.0.1:8282}
+      ARXIVLETTER_TOKEN: ${ARXIVLETTER_TOKEN}
+      ARXIVLETTER_WORKER_NAME: ${ARXIVLETTER_WORKER_NAME:-docker-worker}
+      ARXIVLETTER_DATA_DIR: /tmp/arxivletter-worker

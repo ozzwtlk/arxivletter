@@ -1,0 +1,20 @@
+# arXivletter server on the Raspberry Pi, using an image built on the PC (`./arxivletter ship-server pi@<pi-address>`).
+# Nothing is built here. Needs a .env next to this file (see .env.example).
+#   docker compose up -d        → http://<pi-address>:8282
+services:
+  arxivletter:
+    image: arxivletter-server:latest
+    pull_policy: never          # the image comes from `docker load`, not from a registry
+    container_name: arxivletter
+    restart: unless-stopped
+    ports:
+      - "${ARXIVLETTER_PORT:-8282}:8000"
+    env_file: .env
+    environment:
+      ARXIVLETTER_TOKEN: ${ARXIVLETTER_TOKEN:?set ARXIVLETTER_TOKEN in .env (at least 16 characters)}
+      ARXIVLETTER_ROLE: server
+    volumes:
+      - ${ARXIVLETTER_DATA:-./server-data}:/data
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "5" }

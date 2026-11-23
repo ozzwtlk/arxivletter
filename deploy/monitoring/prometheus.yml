@@ -1,0 +1,9 @@
+# Example Prometheus scrape config for arXivletter (GET /api/metrics, Prometheus text format).
+# Useful alerts: arxivletter_harvest_age_seconds > 4h, arxivletter_jobs{status="failed"} rising,
+# arxivletter_workers_online == 0 for hours while arxivletter_jobs{kind="digest",status="pending"} > 0.
+scrape_configs:
+  - job_name: arxivletter
+    metrics_path: /api/metrics
+    scrape_interval: 60s
+    static_configs:
+      - targets: ["pi.local:8282"]

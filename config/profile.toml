@@ -1,0 +1,85 @@
+# arXivletter research profile — drives relevance ranking, processing priority and premium escalation.
+# Edit here or in the web UI (Settings → Research profile); the UI copy is stored in the database and wins.
+#
+# Keywords are case-insensitive whole-word phrases; a keyword wrapped in /.../ is a regular expression.
+# A title match counts three times as much as an abstract match. `weight` (0–1) is how much the interest matters.
+
+[reader]
+description = """
+Particle phenomenologist (hep-ph) working on dark matter: model building, relic abundance (freeze-out/freeze-in),
+direct/indirect detection, dark sectors and portals, axions/ALPs. Also follows hep-th and formal QFT, especially
+quantum field theory in strong background fields: strong-field QED, Schwinger pair production, Euler–Heisenberg
+effective actions, the Furry picture / Volkov states, worldline methods, vacuum birefringence and resummation /
+non-perturbative effects in external fields.
+"""
+
+[[interests]]
+name = "Dark matter phenomenology"
+weight = 1.0
+keywords = [
+  "dark matter", "/\\bDM\\b/", "WIMP", "WIMPs", "relic abundance", "relic density", "freeze-out", "freeze-in", "FIMP",
+  "direct detection", "indirect detection", "dark sector", "hidden sector", "dark photon", "kinetic mixing",
+  "Higgs portal", "portal", "sterile neutrino dark matter", "self-interacting dark matter", "SIDM",
+  "Sommerfeld enhancement", "bound state formation", "asymmetric dark matter", "co-annihilation", "coannihilation",
+  "forbidden dark matter", "SIMP", "cannibal", "dark radiation", "millicharged", "boosted dark matter",
+  "annihilation cross section", "nuclear recoil", "electron recoil", "XENONnT", "LZ", "PandaX", "DarkSide",
+  "Fermi-LAT", "gamma-ray line", "galactic center excess", "primordial black hole dark matter",
+]
+
+[[interests]]
+name = "Axions and light bosons"
+weight = 0.85
+keywords = [
+  "axion", "axions", "axion-like particle", "ALP", "ALPs", "QCD axion", "Peccei-Quinn", "misalignment",
+  "haloscope", "helioscope", "ultralight dark matter", "fuzzy dark matter", "wave dark matter", "dark photon dark matter",
+  "light shining through a wall",
+]
+
+[[interests]]
+name = "QFT in strong background fields"
+weight = 1.0
+keywords = [
+  "strong field", "strong-field", "strong fields", "strong background", "background field", "external field",
+  "Schwinger effect", "Schwinger pair production", "Schwinger mechanism", "Sauter",
+  "/pair production (?:in|by|from) (?:a |an )?(?:strong|intense|external|electric|constant|laser|background)/",
+  "Euler-Heisenberg", "Heisenberg-Euler", "vacuum birefringence", "vacuum polarization",
+  "light-by-light", "photon splitting", "Furry picture", "Volkov", "Ritus", "nonlinear Compton", "Breit-Wheeler",
+  "laser-plasma", "intense laser", "high-intensity laser", "critical field", "worldline", "worldline instanton",
+  "magnetar", "strong magnetic field", "constant field", "plane wave background", "dynamically assisted",
+  "QED in external fields", "strong-field QED", "SFQED", "Ritus-Narozhny", "radiation reaction", "LUXE", "E-320",
+]
+
+[[interests]]
+name = "Formal QFT and hep-th methods"
+weight = 0.55
+keywords = [
+  "quantum field theory", "effective field theory", "renormalization", "resurgence", "Borel", "instanton",
+  "non-perturbative", "nonperturbative", "effective action", "anomaly", "anomalies", "scattering amplitudes", "S-matrix", "unitarity",
+  "positivity bounds", "Schwinger-Keldysh", "in-in formalism", "thermal field theory", "finite temperature",
+  "large N", "conformal field theory", "generalized symmetries",
+]
+
+[[interests]]
+name = "Early universe and cosmological probes of new physics"
+weight = 0.5
+keywords = [
+  "first-order phase transition", "phase transition", "gravitational wave background", "baryogenesis",
+  "leptogenesis", "reheating", "BBN", "big bang nucleosynthesis", "CMB", "N_eff", "dark radiation",
+  "primordial black holes", "inflation",
+]
+
+[[interests]]
+name = "Neutrinos and BSM at colliders/low energy"
+weight = 0.35
+keywords = [
+  "neutrino mass", "sterile neutrino", "seesaw", "heavy neutral lepton", "long-lived particle", "LHC", "beam dump",
+  "fixed-target", "NA64", "SHiP", "Belle II", "muon g-2", "electron g-2", "lepton flavor violation",
+]
+
+[authors]
+# Papers by these authors get a relevance boost (+1.5). Match is on the surname plus initial, e.g. "Gies, H."
+follow = []
+
+[categories]
+# small additive boost (0–10 scale) by primary category
+boost = { "hep-ph" = 0.4, "hep-th" = 0.2 }
